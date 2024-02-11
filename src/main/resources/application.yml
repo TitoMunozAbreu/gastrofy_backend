@@ -1,0 +1,13 @@
+spring:
+# configuracion hibernate
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  # configuracion postgres
+  datasource:
+    url: jdbc:postgresql://192.168.56.1:5432/gastrofy_db
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
