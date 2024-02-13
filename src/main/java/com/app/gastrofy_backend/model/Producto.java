@@ -4,6 +4,8 @@ import com.app.gastrofy_backend.model.enums.Presentacion;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Data
@@ -44,5 +46,34 @@ public class Producto {
     private double ganancia;
 
     private double precioVenta;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "id_sistema_costo",
+            referencedColumnName = "idSistemaCosto"
+
+    )
+    private SistemaCosto sistemaCosto;
+
+    @ManyToMany
+    @JoinTable(
+            name = "producto_materia_prima",
+            joinColumns = {
+                    @JoinColumn(name = "id_producto", referencedColumnName = "idProducto")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "id_materia_prima", referencedColumnName = "idMateriaPrima")}
+    )
+    private List<MateriaPrima> materiaPrimas;
+
+    @ManyToMany
+    @JoinTable(
+            name = "producto_semi_elaborado",
+            joinColumns = {
+                    @JoinColumn(name = "id_producto", referencedColumnName = "idProducto")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "id_semi_elaborado", referencedColumnName = "idSemiElaborado")}
+    )
+    private List<SemiElaborado> semiElaborados;
+
 
 }

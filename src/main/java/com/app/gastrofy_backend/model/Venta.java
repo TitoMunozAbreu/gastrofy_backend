@@ -43,4 +43,10 @@ public class Venta {
 
     private double ticketPromedio;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "id_sede",
+            referencedColumnName = "idSede"
+    )
+    private Sede sede;
 }

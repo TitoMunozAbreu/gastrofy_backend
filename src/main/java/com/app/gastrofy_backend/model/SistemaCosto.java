@@ -31,6 +31,14 @@ public class SistemaCosto {
             generator = "sistema_costo_sequence"
     )
     private Integer idSistemaCosto;
+
     private String nombreEmpresa;
+
+    @OneToOne
+    @JoinColumn(
+            name = "id_usuario",
+            referencedColumnName = "idUsuario"
+    )
+    private Usuario usuario;
 
 }

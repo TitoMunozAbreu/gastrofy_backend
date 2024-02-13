@@ -40,4 +40,13 @@ public class MateriaPrima {
     private String proveedor;
 
     private Categoria categoria;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "id_sistema_costo",
+            referencedColumnName = "idSistemaCosto"
+
+    )
+    private SistemaCosto sistemaCosto;
+
 }

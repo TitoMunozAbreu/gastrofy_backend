@@ -32,4 +32,11 @@ public class Costo {
     private Periodo periodo;
 
     private Clasificacion clasificacion;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "id_sede",
+            referencedColumnName = "idSede"
+    )
+    private Sede sede;
 }

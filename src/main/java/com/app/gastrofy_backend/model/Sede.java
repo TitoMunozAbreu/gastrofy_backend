@@ -33,4 +33,12 @@ public class Sede {
     private Integer idSede;
 
     private String nombreSede;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "id_sistema_costo",
+            referencedColumnName = "idSistemaCosto",
+            unique = true
+    )
+    private SistemaCosto sistemaCosto;
 }
