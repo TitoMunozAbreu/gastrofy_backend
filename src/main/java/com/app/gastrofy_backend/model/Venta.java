@@ -16,7 +16,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Table(
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "UniqueFecha",
+                        name = "unique_fecha",
                         columnNames = {"fecha"})
         }
 )

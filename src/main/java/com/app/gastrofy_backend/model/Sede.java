@@ -13,7 +13,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Table(
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "UniqueNombreSede",
+                        name = "unique_nombre_sede",
                         columnNames = {"nombreSede"}
                 )
         }

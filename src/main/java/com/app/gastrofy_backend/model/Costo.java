@@ -8,6 +8,8 @@ import lombok.*;
 
 import java.util.Map;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
@@ -21,6 +23,10 @@ public class Costo {
             name = "costo_sequence",
             sequenceName = "costo_sequence",
             allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "costo_sequence"
     )
     private Integer idCosto;
 
