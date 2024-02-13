@@ -43,4 +43,7 @@ public class Usuario {
 
     private String rol;
 
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'https://cdn-icons-png.flaticon.com/512/149/149071.png'")
+    private String imageUrl;
+
 }
