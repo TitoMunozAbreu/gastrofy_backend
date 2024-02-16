@@ -1,5 +1,6 @@
 package com.app.gastrofy_backend.controller;
 
+import com.app.gastrofy_backend.exceptions.DuplicateResourceException;
 import com.app.gastrofy_backend.model.response.HttpGlobalResponse;
 import com.app.gastrofy_backend.model.request.UsuarioRequest;
 import com.app.gastrofy_backend.model.response.UsuarioResponse;
@@ -16,5 +17,5 @@ public interface UsuarioApi {
     //registrar usuario
     @PostMapping
     ResponseEntity<HttpGlobalResponse<UsuarioResponse>> registrarUsuario(@RequestBody
-                                                              @Valid UsuarioRequest usuarioDto);
+                                                              @Valid UsuarioRequest usuarioDto) throws DuplicateResourceException;
 }
