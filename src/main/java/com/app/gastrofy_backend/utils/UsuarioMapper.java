@@ -14,18 +14,20 @@ import org.springframework.stereotype.Component;
 public class UsuarioMapper {
 
     public static Usuario mapUsuarioRequestToEntity(UsuarioRequest usuarioRequest){
-        log.info("Mapping usuarioRequest a usuario");
+        log.info("Mapping usuario");
         return Usuario.builder()
                 .email(usuarioRequest.email())
                 .nombre(usuarioRequest.nombre())
                 .apellido(usuarioRequest.apellido())
                 .contrasena(usuarioRequest.contrasena())
                 .movil(usuarioRequest.movil())
+                .imageUrl("https://cdn-icons-png.flaticon.com/512/149/149071.png")
+                .rol("USER")
                 .build();
     }
 
     public static UsuarioResponse mapUsuarioEntityToResponse(Usuario usuario){
-        log.info("Mapping usuario a usuarioRequest ");
+        log.info("Mapping usuarioResponse ");
         return UsuarioResponse.builder()
                 .email(usuario.getEmail())
                 .nombre(usuario.getNombre())
