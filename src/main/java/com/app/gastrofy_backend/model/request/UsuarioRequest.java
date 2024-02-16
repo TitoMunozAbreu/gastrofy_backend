@@ -5,5 +5,4 @@ public record UsuarioRequest(String email,
                              String apellido,
                              String contrasena,
                              String movil,
-                             String rol,
                              String nombreEmpresa) {}
