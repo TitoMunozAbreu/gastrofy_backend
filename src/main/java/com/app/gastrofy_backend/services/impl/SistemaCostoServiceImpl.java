@@ -21,9 +21,8 @@ public class SistemaCostoServiceImpl implements SistemaCostoService {
     }
 
     @Override
-    public void registrarSistemaCosto(String nombreEmpresa, Usuario usuario) throws DuplicateResourceException {
+    public SistemaCosto registrarSistemaCosto(String nombreEmpresa, Usuario usuario) throws DuplicateResourceException {
         log.info("Comprobar si se encuentra registrada empresa {}", nombreEmpresa);
-
         Boolean existsPorNombreEmpresa = sistemaCostoRepository.existsByNombreEmpresa(nombreEmpresa);
         //comprobar si el nombre se encuentra registrado
         if(existsPorNombreEmpresa){
@@ -37,5 +36,6 @@ public class SistemaCostoServiceImpl implements SistemaCostoService {
                 .build();
         //persistir sistema de costo
         sistemaCostoRepository.save(sistemaCosto);
+        return sistemaCosto;
     }
 }
