@@ -34,5 +34,10 @@ public class UsuarioController implements UsuarioApi {
                                              pageable);
     }
 
+    @Override
+    public ResponseEntity<HttpGlobalResponse<UsuarioResponse>> obtenerUsuarioPorID(Integer usuarioID) throws ResourceNotFoundException {
+        return usuarioService.obtenerUsuarioPorID(usuarioID);
+    }
+
 
 }

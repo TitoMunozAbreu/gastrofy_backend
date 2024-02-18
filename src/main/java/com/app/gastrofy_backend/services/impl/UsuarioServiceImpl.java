@@ -50,7 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new DuplicateResourceException("Email '%s' se encuentra registrado"
                     .formatted(usuarioRequest.email()));
         }
-        log.info("Registrando usuario: {}", usuarioRequest.nombre());
+        log.info("Registrar usuario: {}", usuarioRequest.nombre());
         //mapear usuarioRequest a usuario
         Usuario usuario = mapUsuarioRequestToEntity(usuarioRequest);
         //crear y asociar sistema de costo al usuario
@@ -71,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public ResponseEntity<HttpGlobalResponse<Page<UsuarioResponse>>> listarUsuarios(String usuarioName, Pageable pageable) throws ResourceNotFoundException {
-        log.info("Obteniendo usuarios por nombre '{}', pageable '{}'", usuarioName, pageable);
+        log.info("Obtener usuarios por nombre '{}', pageable '{}'", usuarioName, pageable);
         //obtener lista de usuarios
         Page<UsuarioResponse> usuarioResponsePage = usuarioRepository.findByNombreContaining(usuarioName, pageable)
                 .map(usuario -> mapUsuarioEntityToResponse(usuario));
@@ -85,6 +85,21 @@ public class UsuarioServiceImpl implements UsuarioService {
                         .status(OK)
                         .message("Usuarios encontrado")
                         .data(Map.of("usuarios", usuarioResponsePage))
+                        .build());
+    }
+
+    @Override
+    public ResponseEntity<HttpGlobalResponse<UsuarioResponse>> obtenerUsuarioPorID(Integer usuarioID) throws ResourceNotFoundException {
+        log.info("Obtener usuario por ID '{}'", usuarioID);
+        Usuario usuarioEncontrado = usuarioRepository.findById(usuarioID)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID '%s' no existe"
+                        .formatted(usuarioID)));
+        return ResponseEntity.ok().body(HttpGlobalResponse.<UsuarioResponse>builder()
+                        .timeStamp(now())
+                        .statusCode(OK.value())
+                        .status(OK)
+                        .message("Usuario '%s' encontrado".formatted(usuarioEncontrado.getNombre()))
+                        .data(of("usuario", mapUsuarioEntityToResponse(usuarioEncontrado)))
                         .build());
     }
 

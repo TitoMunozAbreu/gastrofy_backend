@@ -27,4 +27,7 @@ public interface UsuarioApi {
     @GetMapping
     ResponseEntity<HttpGlobalResponse<Page<UsuarioResponse>>> listarUsuarios(@RequestParam Optional<String> usuarioNombre,
                                                                              @PageableDefault Pageable pageable) throws ResourceNotFoundException;
+    //obtener usuario por ID
+    @GetMapping("/{id}")
+    ResponseEntity<HttpGlobalResponse<UsuarioResponse>> obtenerUsuarioPorID(@PathVariable("id") Integer usuarioID) throws ResourceNotFoundException;
 }
