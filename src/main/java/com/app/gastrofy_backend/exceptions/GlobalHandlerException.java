@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import static java.time.LocalDateTime.now;
 import static java.util.Map.of;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -19,39 +20,41 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class GlobalHandlerException {
 
     @ExceptionHandler(DuplicateResourceException.class)
-    public ResponseEntity<HttpGlobalResponse<?>> handleDuplicateResourceException(DuplicateResourceException exception,
-                                                                                        HttpServletRequest request){
+    public ResponseEntity<HttpGlobalResponse<ErrorResponse>> handleDuplicateResourceException(DuplicateResourceException exception,
+                                                                                              HttpServletRequest request){
         //almacenar error
-        String errorMsg =  exception.getMessage();
-        //almacenar error
-        log.error("Solicitud invalida: {}", errorMsg);
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .mensaje(exception.getMessage())
+                .build();
+        log.error("Solicitud invalida: {}", exception.getMessage());
 
         return ResponseEntity.badRequest()
-                .body(HttpGlobalResponse.builder()
+                .body(HttpGlobalResponse.<ErrorResponse>builder()
                         .timeStamp(now())
                         .statusCode(BAD_REQUEST.value())
                         .status(BAD_REQUEST)
-                        .message("Solicitud invalida '%s'".formatted(request.getRequestURI()))
-                        .data(of("error", errorMsg))
+                        .message("Solicitud invalida '%s' ".formatted(request.getRequestURI()))
+                        .data(of("error", errorResponse))
                         .build());
     }
 
     // Customized exception when a resource does not exist
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<HttpGlobalResponse<?>> handleResourceNotFoundException(ResourceNotFoundException exception,
+    public ResponseEntity<HttpGlobalResponse<ErrorResponse>> handleResourceNotFoundException(ResourceNotFoundException exception,
                                                                         HttpServletRequest request){
         //almacenar error
-        String errorMsg =  exception.getMessage();
-        //almacenar error
-        log.error("Solicitud invalida: {}", errorMsg);
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .mensaje(exception.getMessage())
+                .build();
+        log.error("Solicitud invalida: {}", exception.getMessage());
 
-        return ResponseEntity.badRequest()
-                .body(HttpGlobalResponse.builder()
+        return ResponseEntity.status(NOT_FOUND)
+                .body(HttpGlobalResponse.<ErrorResponse>builder()
                         .timeStamp(now())
-                        .statusCode(BAD_REQUEST.value())
-                        .status(BAD_REQUEST)
-                        .message("Solicitud invalida '%s'".formatted(request.getRequestURI()))
-                        .data(of("error", errorMsg))
+                        .statusCode(NOT_FOUND.value())
+                        .status(NOT_FOUND)
+                        .message("Solicitud invalida '%s' ".formatted(request.getRequestURI()))
+                        .data(of("error", errorResponse))
                         .build());
     }
 }
