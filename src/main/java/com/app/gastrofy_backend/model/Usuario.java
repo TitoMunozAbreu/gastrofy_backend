@@ -45,4 +45,6 @@ public class Usuario {
 
     private String imageUrl;
 
+    @OneToOne(mappedBy = "usuario")
+    private SistemaCosto sistemaCosto;
 }
