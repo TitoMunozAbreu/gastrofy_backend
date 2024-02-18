@@ -58,7 +58,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                         .statusCode(OK.value())
                         .status(CREATED)
                         .message("Usuario '%s' registrado con exito".formatted(usuario.getNombre()))
-                        .data(of("usuario", mapUsuarioEntityToResponse(usuario)))
+                        .data(of("usuario", mapUsuarioEntityToResponse(usuario, usuarioRequest.nombreEmpresa())))
                         .build());
     }
 
