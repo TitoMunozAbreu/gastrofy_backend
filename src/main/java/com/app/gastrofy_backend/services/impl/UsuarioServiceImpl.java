@@ -1,6 +1,8 @@
 package com.app.gastrofy_backend.services.impl;
 
 import com.app.gastrofy_backend.exceptions.DuplicateResourceException;
+import com.app.gastrofy_backend.exceptions.ResourceNotFoundException;
+import com.app.gastrofy_backend.model.SistemaCosto;
 import com.app.gastrofy_backend.model.Usuario;
 import com.app.gastrofy_backend.model.request.UsuarioRequest;
 import com.app.gastrofy_backend.model.response.HttpGlobalResponse;
@@ -9,11 +11,15 @@ import com.app.gastrofy_backend.repositories.UsuarioRepository;
 import com.app.gastrofy_backend.services.SistemaCostoService;
 import com.app.gastrofy_backend.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
+import java.util.Map;
 
 import static com.app.gastrofy_backend.utils.UsuarioMapper.mapUsuarioEntityToResponse;
 import static com.app.gastrofy_backend.utils.UsuarioMapper.mapUsuarioRequestToEntity;
@@ -47,10 +53,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         log.info("Registrando usuario: {}", usuarioRequest.nombre());
         //mapear usuarioRequest a usuario
         Usuario usuario = mapUsuarioRequestToEntity(usuarioRequest);
+        //crear y asociar sistema de costo al usuario
+        SistemaCosto sistemaCosto = sistemaCostoService.registrarSistemaCosto(usuarioRequest.nombreEmpresa(), usuario);
+        usuario.setSistemaCosto(sistemaCosto);
         //persistir usuario
         usuarioRepository.save(usuario);
-        //crear y asociar sistema de costo al usuario
-        sistemaCostoService.registrarSistemaCosto(usuarioRequest.nombreEmpresa(), usuario);
 
         return ResponseEntity.created(getURI(usuario.getIdUsuario()))
                 .body(HttpGlobalResponse.<UsuarioResponse>builder()
@@ -58,7 +65,26 @@ public class UsuarioServiceImpl implements UsuarioService {
                         .statusCode(OK.value())
                         .status(CREATED)
                         .message("Usuario '%s' registrado con exito".formatted(usuario.getNombre()))
-                        .data(of("usuario", mapUsuarioEntityToResponse(usuario, usuarioRequest.nombreEmpresa())))
+                        .data(of("usuario", mapUsuarioEntityToResponse(usuario)))
+                        .build());
+    }
+
+    @Override
+    public ResponseEntity<HttpGlobalResponse<Page<UsuarioResponse>>> listarUsuarios(String usuarioName, Pageable pageable) throws ResourceNotFoundException {
+        log.info("Obteniendo usuarios por nombre '{}', pageable '{}'", usuarioName, pageable);
+        //obtener lista de usuarios
+        Page<UsuarioResponse> usuarioResponsePage = usuarioRepository.findByNombreContaining(usuarioName, pageable)
+                .map(usuario -> mapUsuarioEntityToResponse(usuario));
+        //comprobar que la lista no esta vacia
+        if(usuarioResponsePage.getContent().isEmpty()) {
+            throw new ResourceNotFoundException("Usuarios no registrados");
+        }
+        return ResponseEntity.ok().body(HttpGlobalResponse.<Page<UsuarioResponse>>builder()
+                        .timeStamp(now())
+                        .statusCode(OK.value())
+                        .status(OK)
+                        .message("Usuarios encontrado")
+                        .data(Map.of("usuarios", usuarioResponsePage))
                         .build());
     }
 

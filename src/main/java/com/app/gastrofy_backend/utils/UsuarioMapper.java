@@ -26,7 +26,7 @@ public class UsuarioMapper {
                 .build();
     }
 
-    public static UsuarioResponse mapUsuarioEntityToResponse(Usuario usuario, String nombreEmpresa){
+    public static UsuarioResponse mapUsuarioEntityToResponse(Usuario usuario){
         log.info("Mapping usuarioResponse ");
         return UsuarioResponse.builder()
                 .email(usuario.getEmail())
@@ -34,7 +34,7 @@ public class UsuarioMapper {
                 .apellido(usuario.getApellido())
                 .movil(usuario.getMovil())
                 .rol(usuario.getRol())
-                .nombreEmpresa(nombreEmpresa)
+                .nombreEmpresa(usuario.getSistemaCosto().getNombreEmpresa())
                 .build();
     }
 }
