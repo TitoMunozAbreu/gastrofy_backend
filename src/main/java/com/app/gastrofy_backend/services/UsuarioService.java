@@ -13,7 +13,11 @@ public interface UsuarioService {
 
     ResponseEntity<HttpGlobalResponse<UsuarioResponse>> registrarUsuario(UsuarioRequest usuarioRequest) throws DuplicateResourceException;
 
-    ResponseEntity<HttpGlobalResponse<Page<UsuarioResponse>>> listarUsuarios(String usuarioName, Pageable pageable) throws ResourceNotFoundException;
+    ResponseEntity<HttpGlobalResponse<Page<UsuarioResponse>>> listarUsuarios(String usuarioName,
+                                                                             Pageable pageable) throws ResourceNotFoundException;
 
     ResponseEntity<HttpGlobalResponse<UsuarioResponse>> obtenerUsuarioPorID(Integer usuarioID) throws ResourceNotFoundException;
+
+    ResponseEntity<HttpGlobalResponse<UsuarioResponse>> actualizarUsuarioPorID(Integer usuarioID,
+                                                                               UsuarioRequest usuarioRequest) throws ResourceNotFoundException, DuplicateResourceException;
 }

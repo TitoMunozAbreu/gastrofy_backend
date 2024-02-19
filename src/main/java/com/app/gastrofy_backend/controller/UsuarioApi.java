@@ -29,5 +29,12 @@ public interface UsuarioApi {
                                                                              @PageableDefault Pageable pageable) throws ResourceNotFoundException;
     //obtener usuario por ID
     @GetMapping("/{id}")
-    ResponseEntity<HttpGlobalResponse<UsuarioResponse>> obtenerUsuarioPorID(@PathVariable("id") Integer usuarioID) throws ResourceNotFoundException;
+    ResponseEntity<HttpGlobalResponse<UsuarioResponse>> obtenerUsuarioPorID(@PathVariable("id")
+                                                                            Integer usuarioID) throws ResourceNotFoundException;
+
+    //actualizar usuario por ID
+    @PutMapping("/{id}")
+    ResponseEntity<HttpGlobalResponse<UsuarioResponse>> actualizarUsuarioPorID(@PathVariable("id") Integer usuarioID,
+                                                                               @RequestBody
+                                                                               @Valid UsuarioRequest usuarioRequest ) throws DuplicateResourceException, ResourceNotFoundException;
 }

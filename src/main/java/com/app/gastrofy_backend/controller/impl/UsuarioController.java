@@ -39,5 +39,11 @@ public class UsuarioController implements UsuarioApi {
         return usuarioService.obtenerUsuarioPorID(usuarioID);
     }
 
+    @Override
+    public ResponseEntity<HttpGlobalResponse<UsuarioResponse>> actualizarUsuarioPorID(Integer usuarioID,
+                                                                                      UsuarioRequest usuarioRequest) throws ResourceNotFoundException,
+                                                                                                                            DuplicateResourceException {
+        return usuarioService.actualizarUsuarioPorID(usuarioID, usuarioRequest);
+    }
 
 }

@@ -70,7 +70,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<HttpGlobalResponse<Page<UsuarioResponse>>> listarUsuarios(String usuarioName, Pageable pageable) throws ResourceNotFoundException {
+    public ResponseEntity<HttpGlobalResponse<Page<UsuarioResponse>>> listarUsuarios(String usuarioName,
+                                                                                    Pageable pageable) throws ResourceNotFoundException {
         log.info("Obtener usuarios por nombre '{}', pageable '{}'", usuarioName, pageable);
         //obtener lista de usuarios
         Page<UsuarioResponse> usuarioResponsePage = usuarioRepository.findByNombreContaining(usuarioName, pageable)
@@ -91,16 +92,58 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResponseEntity<HttpGlobalResponse<UsuarioResponse>> obtenerUsuarioPorID(Integer usuarioID) throws ResourceNotFoundException {
         log.info("Obtener usuario por ID '{}'", usuarioID);
-        Usuario usuarioEncontrado = usuarioRepository.findById(usuarioID)
+        UsuarioResponse usuarioResponse = usuarioRepository.findById(usuarioID)
+                .map(usuario -> mapUsuarioEntityToResponse(usuario))
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID '%s' no existe"
                         .formatted(usuarioID)));
         return ResponseEntity.ok().body(HttpGlobalResponse.<UsuarioResponse>builder()
                         .timeStamp(now())
                         .statusCode(OK.value())
                         .status(OK)
-                        .message("Usuario '%s' encontrado".formatted(usuarioEncontrado.getNombre()))
-                        .data(of("usuario", mapUsuarioEntityToResponse(usuarioEncontrado)))
+                        .message("Usuario '%s' encontrado".formatted(usuarioResponse.getNombre()))
+                        .data(of("usuario", usuarioResponse))
                         .build());
+    }
+
+    @Override
+    public ResponseEntity<HttpGlobalResponse<UsuarioResponse>> actualizarUsuarioPorID(Integer usuarioID,
+                                                                                      UsuarioRequest usuarioRequest) throws ResourceNotFoundException, DuplicateResourceException {
+        log.info("Actualizar usuario con ID '{}'", usuarioID);
+        //comprobar si el usuario se encuentra registrado
+        Usuario usuarioEncontrado = usuarioRepository.findById(usuarioID)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID '%s' no se encuentra registrado"
+                        .formatted(usuarioID)));
+        //comprobar si el email a registrar sea diferente y no se encuntre registrado
+        if(!usuarioEncontrado.getEmail().equals(usuarioRequest.email()) && !existeUsuarioPorEmail(usuarioRequest.email())){
+            usuarioEncontrado.setEmail(usuarioRequest.email());
+        }
+        //actualizar datos al usuarioEncontrado
+        usuarioEncontrado.setNombre(usuarioRequest.nombre());
+        usuarioEncontrado.setApellido(usuarioRequest.apellido());
+        usuarioEncontrado.setContrasena(usuarioRequest.contrasena());
+        usuarioEncontrado.setMovil(usuarioRequest.movil());
+        usuarioEncontrado.getSistemaCosto().setNombreEmpresa(usuarioRequest.nombreEmpresa());
+        //persistir usuario con los nuevos datos
+        usuarioRepository.save(usuarioEncontrado);
+
+        return ResponseEntity.ok().body(HttpGlobalResponse.<UsuarioResponse>builder()
+                .timeStamp(now())
+                .statusCode(OK.value())
+                .status(OK)
+                .message("Usuario '%s' actualizado".formatted(usuarioEncontrado.getNombre()))
+                .data(of("usuario", mapUsuarioEntityToResponse(usuarioEncontrado)))
+                .build());
+    }
+
+    public boolean existeUsuarioPorEmail(String email) throws DuplicateResourceException {
+        log.info("Comprobar si se encuentra registrado email {}", email);
+        Boolean existePorEmail = usuarioRepository.existsByEmail(email);
+        //comprobar si el email se encuentra registrado
+        if(existePorEmail){
+            throw new DuplicateResourceException("Email '%s' se encuentra registrado"
+                    .formatted(email));
+        }
+        return existePorEmail;
     }
 
     // Metodo para definir la URI de la ubicacion del objeto creado
