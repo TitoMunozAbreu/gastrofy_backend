@@ -41,8 +41,8 @@ public class Costo {
 
     @ManyToOne
     @JoinColumn(
-            name = "id_sede",
-            referencedColumnName = "idSede"
+            name = "id_venta",
+            referencedColumnName = "idVenta"
     )
-    private Sede sede;
+    private Venta venta;
 }
