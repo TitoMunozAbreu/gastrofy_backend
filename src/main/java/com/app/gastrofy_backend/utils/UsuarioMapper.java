@@ -16,11 +16,11 @@ public class UsuarioMapper {
     public static Usuario mapUsuarioRequestToEntity(UsuarioRequest usuarioRequest){
         log.info("Mapping usuario");
         return Usuario.builder()
-                .email(usuarioRequest.email())
-                .nombre(usuarioRequest.nombre())
-                .apellido(usuarioRequest.apellido())
-                .contrasena(usuarioRequest.contrasena())
-                .movil(usuarioRequest.movil())
+                .email(usuarioRequest.email().toLowerCase().trim())
+                .nombre(usuarioRequest.nombre().toLowerCase().trim())
+                .apellido(usuarioRequest.apellido().toLowerCase().trim())
+                .contrasena(usuarioRequest.contrasena().trim())
+                .movil(usuarioRequest.movil().trim())
                 .imageUrl("https://cdn-icons-png.flaticon.com/512/149/149071.png")
                 .rol("USER")
                 .build();
