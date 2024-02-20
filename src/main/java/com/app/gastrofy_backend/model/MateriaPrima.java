@@ -27,6 +27,8 @@ public class MateriaPrima {
     )
     private Integer idMateriaPrima;
 
+    private String codigoProducto;
+
     private String nombre;
 
     private double precioCompra;

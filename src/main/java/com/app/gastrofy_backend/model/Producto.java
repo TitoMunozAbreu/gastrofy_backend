@@ -45,7 +45,11 @@ public class Producto {
 
     private double ganancia;
 
-    private double precioVenta;
+    private double precioVenta1;
+
+    private double precioVenta2;
+
+    private double precioVenta3;
 
     @ManyToOne
     @JoinColumn(
