@@ -3,11 +3,14 @@ package com.app.gastrofy_backend.services.impl;
 import com.app.gastrofy_backend.exceptions.DuplicateResourceException;
 import com.app.gastrofy_backend.model.SistemaCosto;
 import com.app.gastrofy_backend.model.Usuario;
+import com.app.gastrofy_backend.model.enums.GlobalPresentacion;
 import com.app.gastrofy_backend.repositories.SistemaCostoRepository;
 import com.app.gastrofy_backend.services.SistemaCostoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.app.gastrofy_backend.model.enums.GlobalPresentacion.*;
 
 @Service
 @Transactional(rollbackFor = {DuplicateResourceException.class})
@@ -33,6 +36,8 @@ public class SistemaCostoServiceImpl implements SistemaCostoService {
         SistemaCosto sistemaCosto = SistemaCosto.builder()
                 .nombreEmpresa(nombreEmpresa)
                 .usuario(usuario)
+                //Estableciendo por defecto globalPresentacion
+                .globalPresentacion(KG)
                 .build();
         //persistir sistema de costo
         sistemaCostoRepository.save(sistemaCosto);

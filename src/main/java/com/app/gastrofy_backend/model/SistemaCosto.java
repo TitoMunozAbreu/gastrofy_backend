@@ -1,5 +1,6 @@
 package com.app.gastrofy_backend.model;
 
+import com.app.gastrofy_backend.model.enums.GlobalPresentacion;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +34,8 @@ public class SistemaCosto {
     private Integer idSistemaCosto;
 
     private String nombreEmpresa;
+
+    private GlobalPresentacion globalPresentacion;
 
     @OneToOne
     @JoinColumn(
