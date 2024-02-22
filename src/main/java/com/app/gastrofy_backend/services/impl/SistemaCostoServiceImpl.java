@@ -55,4 +55,12 @@ public class SistemaCostoServiceImpl implements SistemaCostoService {
         //eliminar sistema de la BBDD
         sistemaCostoRepository.delete(sistemaCosto);
     }
+
+    @Override
+    public SistemaCosto obtenerSistemaCostoPorID(Integer sistemaID) throws ResourceNotFoundException {
+        log.info("Obtener sistema costo con ID {}", sistemaID);
+        return sistemaCostoRepository.findById(sistemaID)
+                .orElseThrow(() -> new ResourceNotFoundException("Sistema costo ID '%s' NO se encuentra registrada"
+                .formatted(sistemaID)));
+    }
 }

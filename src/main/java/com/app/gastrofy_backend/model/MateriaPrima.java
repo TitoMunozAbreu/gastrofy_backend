@@ -38,7 +38,13 @@ public class MateriaPrima {
     @Enumerated(EnumType.STRING)
     private Presentacion presentacion;
 
-    private double costoUnitario;
+    private double costoUnitarioKg;
+
+    private double costoUnitarioGr;
+
+    private double costoUnitarioLb;
+
+    private double costoUnitarioOz;
 
     private String proveedor;
 

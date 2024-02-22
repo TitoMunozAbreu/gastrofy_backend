@@ -5,7 +5,7 @@ public enum Presentacion {
     GR,
     LB,
     OZ,
-    GALONES,
+    GAL,
     UND,
     LT,
 }

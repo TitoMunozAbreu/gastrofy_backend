@@ -9,4 +9,6 @@ public interface SistemaCostoService {
     SistemaCosto registrarSistemaCosto(String s, Usuario usuario) throws DuplicateResourceException;
 
     void eliminarSistemaCostoPorNombre(String nombreEmpresa) throws ResourceNotFoundException;
+
+    SistemaCosto obtenerSistemaCostoPorID(Integer sistemaID) throws ResourceNotFoundException;
 }
