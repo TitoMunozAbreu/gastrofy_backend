@@ -1,16 +1,16 @@
 package com.app.gastrofy_backend.services.impl;
 
 import com.app.gastrofy_backend.exceptions.DuplicateResourceException;
+import com.app.gastrofy_backend.exceptions.ResourceNotFoundException;
 import com.app.gastrofy_backend.model.SistemaCosto;
 import com.app.gastrofy_backend.model.Usuario;
-import com.app.gastrofy_backend.model.enums.GlobalPresentacion;
 import com.app.gastrofy_backend.repositories.SistemaCostoRepository;
 import com.app.gastrofy_backend.services.SistemaCostoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.app.gastrofy_backend.model.enums.GlobalPresentacion.*;
+import static com.app.gastrofy_backend.model.enums.GlobalPresentacion.KG;
 
 @Service
 @Transactional(rollbackFor = {DuplicateResourceException.class})
@@ -32,7 +32,7 @@ public class SistemaCostoServiceImpl implements SistemaCostoService {
             throw new DuplicateResourceException("Empresa '%s' se encuentra registrada"
                     .formatted(nombreEmpresa));
         }
-        log.info("Creando sistema de costo de la empresa {}", nombreEmpresa);
+        log.info("Registrar sistema de costo para la empresa {}", nombreEmpresa);
         SistemaCosto sistemaCosto = SistemaCosto.builder()
                 .nombreEmpresa(nombreEmpresa)
                 .usuario(usuario)
@@ -42,5 +42,17 @@ public class SistemaCostoServiceImpl implements SistemaCostoService {
         //persistir sistema de costo
         sistemaCostoRepository.save(sistemaCosto);
         return sistemaCosto;
+    }
+
+    @Override
+    public void eliminarSistemaCostoPorNombre(String nombreEmpresa) throws ResourceNotFoundException {
+        log.info("Eliminar sistema de costo empresa {}", nombreEmpresa);
+        SistemaCosto sistemaCosto = sistemaCostoRepository.findByNombreEmpresa(nombreEmpresa)
+                .orElseThrow(() -> new ResourceNotFoundException("Empresa '%s' NO se encuentra registrada"
+                        .formatted(nombreEmpresa)));
+
+        //TODO: Eliminar las tablas asociadas al sistema una a una.
+        //eliminar sistema de la BBDD
+        sistemaCostoRepository.delete(sistemaCosto);
     }
 }

@@ -46,4 +46,9 @@ public class UsuarioController implements UsuarioApi {
         return usuarioService.actualizarUsuarioPorID(usuarioID, usuarioRequest);
     }
 
+    @Override
+    public ResponseEntity<HttpGlobalResponse<?>> eliminarUsuarioPorID(Integer usuarioID) throws ResourceNotFoundException {
+        return usuarioService.eliminarUsuarioPorID(usuarioID);
+    }
+
 }

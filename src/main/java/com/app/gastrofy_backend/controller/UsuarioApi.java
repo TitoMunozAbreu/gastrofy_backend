@@ -37,4 +37,7 @@ public interface UsuarioApi {
     ResponseEntity<HttpGlobalResponse<UsuarioResponse>> actualizarUsuarioPorID(@PathVariable("id") Integer usuarioID,
                                                                                @RequestBody
                                                                                @Valid UsuarioRequest usuarioRequest ) throws DuplicateResourceException, ResourceNotFoundException;
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<HttpGlobalResponse<?>> eliminarUsuarioPorID(@PathVariable("id") Integer usuarioID) throws ResourceNotFoundException;
 }

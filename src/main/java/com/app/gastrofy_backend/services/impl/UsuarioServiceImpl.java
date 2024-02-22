@@ -135,6 +135,26 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .build());
     }
 
+    @Override
+    public ResponseEntity<HttpGlobalResponse<?>> eliminarUsuarioPorID(Integer usuarioID) throws ResourceNotFoundException {
+        log.info("Eliminar usuario con ID '{}'", usuarioID);
+        //comprobar si el usuario se encuentra registrado
+        Usuario usuarioEncontrado = usuarioRepository.findById(usuarioID)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID '%s' no se encuentra registrado"
+                        .formatted(usuarioID)));
+        //eliminar sistema de costo del usuario
+        sistemaCostoService.eliminarSistemaCostoPorNombre(usuarioEncontrado.getSistemaCosto().getNombreEmpresa());
+        //eliminar usuario de la BBDD
+        usuarioRepository.delete(usuarioEncontrado);
+
+        return ResponseEntity.ok().body(HttpGlobalResponse.builder()
+                .timeStamp(now())
+                .statusCode(OK.value())
+                .status(OK)
+                .message("Usuario '%s' Eliminado".formatted(usuarioEncontrado.getNombre()))
+                .build());
+    }
+
     public boolean existeUsuarioPorEmail(String email) throws DuplicateResourceException {
         log.info("Comprobar si se encuentra registrado email {}", email);
         Boolean existePorEmail = usuarioRepository.existsByEmail(email);

@@ -20,4 +20,6 @@ public interface UsuarioService {
 
     ResponseEntity<HttpGlobalResponse<UsuarioResponse>> actualizarUsuarioPorID(Integer usuarioID,
                                                                                UsuarioRequest usuarioRequest) throws ResourceNotFoundException, DuplicateResourceException;
+
+    ResponseEntity<HttpGlobalResponse<?>> eliminarUsuarioPorID(Integer usuarioID) throws ResourceNotFoundException;
 }
