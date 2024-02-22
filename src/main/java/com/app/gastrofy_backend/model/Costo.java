@@ -33,10 +33,13 @@ public class Costo {
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<String,Double> costoDetalle;
 
+    @Enumerated(EnumType.STRING)
     private TipoCosto tipoCosto;
 
+    @Enumerated(EnumType.STRING)
     private Periodo periodo;
 
+    @Enumerated(EnumType.STRING)
     private Clasificacion clasificacion;
 
     @ManyToOne

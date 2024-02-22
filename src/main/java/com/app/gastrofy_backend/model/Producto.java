@@ -29,6 +29,7 @@ public class Producto {
 
     private String nombre;
 
+    @Enumerated(EnumType.STRING)
     private Presentacion presentacion;
 
     private double costoReceta;
@@ -59,7 +60,7 @@ public class Producto {
     )
     private SistemaCosto sistemaCosto;
 
-    @ManyToMany
+/*    @ManyToMany
     @JoinTable(
             name = "producto_materia_prima",
             joinColumns = {
@@ -67,7 +68,7 @@ public class Producto {
             inverseJoinColumns = {
                     @JoinColumn(name = "id_materia_prima", referencedColumnName = "idMateriaPrima")}
     )
-    private List<MateriaPrima> materiaPrimas;
+    private List<MateriaPrimaApi> materiaPrimas;
 
     @ManyToMany
     @JoinTable(
@@ -77,7 +78,7 @@ public class Producto {
             inverseJoinColumns = {
                     @JoinColumn(name = "id_semi_elaborado", referencedColumnName = "idSemiElaborado")}
     )
-    private List<SemiElaborado> semiElaborados;
+    private List<SemiElaborado> semiElaborados;*/
 
 
 }

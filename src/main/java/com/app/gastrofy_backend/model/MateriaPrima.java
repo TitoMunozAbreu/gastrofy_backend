@@ -35,19 +35,20 @@ public class MateriaPrima {
 
     private double cantidad;
 
+    @Enumerated(EnumType.STRING)
     private Presentacion presentacion;
 
     private double costoUnitario;
 
     private String proveedor;
 
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
     @ManyToOne
     @JoinColumn(
             name = "id_sistema_costo",
             referencedColumnName = "idSistemaCosto"
-
     )
     private SistemaCosto sistemaCosto;
 

@@ -35,6 +35,7 @@ public class SistemaCosto {
 
     private String nombreEmpresa;
 
+    @Enumerated(EnumType.STRING)
     private GlobalPresentacion globalPresentacion;
 
     @OneToOne
