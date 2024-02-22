@@ -62,7 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         return ResponseEntity.created(getURI(usuario.getIdUsuario()))
                 .body(HttpGlobalResponse.<UsuarioResponse>builder()
                         .timeStamp(now())
-                        .statusCode(OK.value())
+                        .statusCode(CREATED.value())
                         .status(CREATED)
                         .message("Usuario '%s' registrado con exito".formatted(usuario.getNombre()))
                         .data(of("usuario", mapUsuarioEntityToResponse(usuario)))
