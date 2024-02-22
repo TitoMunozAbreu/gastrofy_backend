@@ -36,4 +36,11 @@ public class MpCompuesto {
             referencedColumnName = "idMateriaPrima"
     )
     private MateriaPrima materiaPrima;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "id_semi_elaborado",
+            referencedColumnName = "idSemiElaborado"
+    )
+    private SemiElaborado semiElaborado;
 }

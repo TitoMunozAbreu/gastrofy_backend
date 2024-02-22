@@ -29,6 +29,7 @@ public class SemiElaborado {
 
     private String nombre;
 
+    @Enumerated(EnumType.STRING)
     private Presentacion presentacion;
 
     private double costoReceta;
@@ -49,23 +50,9 @@ public class SemiElaborado {
     )
     private SistemaCosto sistemaCosto;
 
-    @ManyToMany
-    @JoinTable(
-            name = "semi_elaborado_materia_prima",
-            joinColumns = {
-                    @JoinColumn(name = "id_semi_elaborado", referencedColumnName = "idSemiElaborado")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "id_materia_prima", referencedColumnName = "idMateriaPrima")}
-    )
-    private List<MateriaPrima> materiaPrimas;
+    @OneToMany(mappedBy = "semiElaborado")
+    private List<MpCompuesto> mpCompuestos;
 
-    @ManyToMany
-    @JoinTable(
-            name = "semi_elaborado_compuesto",
-            joinColumns = {
-                    @JoinColumn(name = "id_semi_elaborado", referencedColumnName = "idSemiElaborado")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "id_compuesto_semi_elaborado", referencedColumnName = "idSemiElaborado")}
-    )
-    private List<SemiElaborado> semiElaborados;
+    @OneToMany(mappedBy = "semiElaborado")
+    private List<SeCompuesto> seCompuestos;
 }
