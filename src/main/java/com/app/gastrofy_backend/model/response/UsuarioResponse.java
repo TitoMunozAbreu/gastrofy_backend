@@ -14,5 +14,5 @@ public class UsuarioResponse {
     private String apellido;
     private String movil;
     private String rol;
-    private String nombreEmpresa;
+    private SistemaCostoResponse sistemaCosto;
 }

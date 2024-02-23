@@ -1,10 +1,12 @@
 package com.app.gastrofy_backend.utils;
 
 import com.app.gastrofy_backend.model.Usuario;
-import com.app.gastrofy_backend.model.response.UsuarioResponse;
 import com.app.gastrofy_backend.model.request.UsuarioRequest;
+import com.app.gastrofy_backend.model.response.UsuarioResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import static com.app.gastrofy_backend.utils.SistemaCostoMapper.mapSistemaEntidadToResponse;
 
 /**
  * Clase para mapear Usuario
@@ -34,7 +36,7 @@ public class UsuarioMapper {
                 .apellido(usuario.getApellido())
                 .movil(usuario.getMovil())
                 .rol(usuario.getRol())
-                .nombreEmpresa(usuario.getSistemaCosto().getNombreEmpresa())
+                .sistemaCosto(mapSistemaEntidadToResponse(usuario.getSistemaCosto()))
                 .build();
     }
 }
