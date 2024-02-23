@@ -45,9 +45,8 @@ public class MateriaPrimaServiceImpl implements MateriaPrimaService {
                         .timeStamp(now())
                         .statusCode(CREATED.value())
                         .status(CREATED)
-                        .message("Materias primas  registrada con exito")
+                        .message("Materias primas registrada con exito")
                         .data(of("materias primas", mapListEntidadToMateriaPrimaResponse(materiaPrimas)))
                         .build());
     }
-
 }

@@ -17,8 +17,8 @@ import static com.app.gastrofy_backend.controller.constante.EndpointUri.Api.Sist
 
 @RequestMapping(value = SISTEMA_COSTOS)
 public interface MateriaPrimaApi {
-    @PostMapping("/{scID}/materia-prima")
-    ResponseEntity<HttpGlobalResponse<List<MateriaPrimaResponse>>> registrarMateriaPrima(@PathVariable("scID") Integer sistemaID,
+    @PostMapping("/{scid}/materia-prima")
+    ResponseEntity<HttpGlobalResponse<List<MateriaPrimaResponse>>> registrarMateriaPrima(@PathVariable("scid") Integer sistemaID,
                                                                                                 @Valid @RequestBody
                                                                                                 List<MateriaPrimaRequest> materiaPrimaRequest) throws ResourceNotFoundException;
 }
