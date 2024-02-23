@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class SistemaCostoMapper {
 
     public static SistemaCostoResponse mapSistemaEntidadToResponse(SistemaCosto sistemaCosto) {
+        log.info("Mapping sistemaCostoResponse ");
         return SistemaCostoResponse.builder()
                 .idSistemaCosto(sistemaCosto.getIdSistemaCosto())
                 .nombreEmpresa(sistemaCosto.getNombreEmpresa())

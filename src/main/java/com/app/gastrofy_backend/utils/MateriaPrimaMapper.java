@@ -18,6 +18,7 @@ import static com.app.gastrofy_backend.model.enums.Presentacion.valueOf;
 @Slf4j
 public class MateriaPrimaMapper {
     public static List<MateriaPrima> mapListMateriaPrimaRequestToEntidad(List<MateriaPrimaRequest> materiaPrimaRequests, SistemaCosto sistemaCosto){
+            log.info("Mapping '{}' materias primas para sistema costo con ID '{}'", materiaPrimaRequests.size(), sistemaCosto.getIdSistemaCosto());
             return materiaPrimaRequests.stream()
                     .map(materiaPrimaRequest -> {
                         return  mapMateriaPrimaRequestToEntidad(materiaPrimaRequest,sistemaCosto);
@@ -26,6 +27,7 @@ public class MateriaPrimaMapper {
     }
 
     public static MateriaPrima mapMateriaPrimaRequestToEntidad(MateriaPrimaRequest materiaPrimaRequest, SistemaCosto sistemaCosto){
+        log.info("Mapping materia prima '{}'", materiaPrimaRequest.nombre());
         //almacenar en variables
         double precioCompra = materiaPrimaRequest.precioCompra();
         double cantidad = materiaPrimaRequest.cantidad();
@@ -49,6 +51,7 @@ public class MateriaPrimaMapper {
     }
 
     public static List<MateriaPrimaResponse> mapListEntidadToMateriaPrimaResponse(List<MateriaPrima> materiaPrimas){
+        log.info("Mapping '{}' materias primas response", materiaPrimas.size());
         return materiaPrimas.stream()
                 .map(MateriaPrimaMapper::mapEntidadToMateriaPrimaResponse)
                 .collect(Collectors.toList());
