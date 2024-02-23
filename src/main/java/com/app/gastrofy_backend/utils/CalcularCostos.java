@@ -9,15 +9,18 @@ public class CalcularCostos {
     private final double PRECIO_COMPRA;
     private final double CANTIDAD;
     private final Presentacion PRESENTACION;
+    private double costo;
+
 
     public CalcularCostos(double PRECIO_COMPRA, double CANTIDAD, Presentacion PRESENTACION) {
         this.PRECIO_COMPRA = PRECIO_COMPRA;
         this.CANTIDAD = CANTIDAD;
         this.PRESENTACION = PRESENTACION;
+        //almcenar valor del costo
+        this.costo = calcularCosto();
     }
 
     public double calcularCostoUnitarioKg(){
-        double costo = calcularCosto();
         log.info("Calcular costo unitario a kg");
         double costoUnitario = 0;
         //tabla de conversion a GlobalPresentacion (KG)
@@ -33,7 +36,6 @@ public class CalcularCostos {
     }
 
     public double calcularCostoUnitarioGr(){
-        double costo = calcularCosto();
         log.info("Calcular costo unitario a Gr");
         double costoUnitario = 0;
         //tabla de conversion a GlobalPresentacion (GR)
@@ -50,7 +52,6 @@ public class CalcularCostos {
     }
 
     public double calcularCostoUnitarioLb(){
-        double costo = calcularCosto();
         log.info("Calcular costo unitario a Lb");
         double costoUnitario = 0;
         //tabla de conversion a GlobalPresentacion (LB)
@@ -67,7 +68,6 @@ public class CalcularCostos {
     }
 
     public double calcularCostoUnitarioOz(){
-        double costo = calcularCosto();
         log.info("Calcular costo unitario a Oz");
         double costoUnitario = 0;
         //tabla de conversion a GlobalPresentacion (OZ)
